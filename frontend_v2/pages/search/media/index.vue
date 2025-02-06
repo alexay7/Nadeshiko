@@ -144,7 +144,7 @@ watch([page, currentView, searchQuery], () => {
                 :selected="filterType === 'anime'"
               />
               <SearchDropdownItem
-                text="Liveaction"
+                text="Live Action"
                 @click="handleFilterChange('liveaction')"
                 :selected="filterType === 'liveaction'"
               />
@@ -237,7 +237,7 @@ watch([page, currentView, searchQuery], () => {
             <div class="relative flex-auto p-6 z-10">
               <div class="flex flex-wrap">
                 <h1 class="flex-auto text-xl font-semibold dark:text-gray-50">
-                  {{ media_info.english_name }}
+                  {{ media_info.japanese_name }}
                 </h1>
                 <div
                   class="text-lg font-semibold bg-graypalid px-3 rounded-lg dark:bg-graypalid dark:border-sgray2 text-white"
@@ -255,46 +255,50 @@ watch([page, currentView, searchQuery], () => {
                 class="mt-2 py-2 flex items-center text-sm text-gray-800 gap-x-1.5 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-0 dark:text-white dark:after:border-white/20"
               ></div>
 
-              <div class="grid grid-cols-2">
+              <div class="grid grid-cols-1">
                 <p
                   class="text-sm font-semibold text-gray-500 dark:text-gray-300"
                 >
                   Cantidad de Oraciones: {{ media_info.num_segments }}
                 </p>
+<!--                <p-->
+<!--                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"-->
+<!--                >-->
+<!--                  Cantidad de Palabras:-->
+<!--                </p>-->
+<!--                <p-->
+<!--                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"-->
+<!--                >-->
+<!--                  Palabras Únicas:-->
+<!--                </p>-->
+<!--                <p-->
+<!--                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"-->
+<!--                >-->
+<!--                  Kanjis Únicos:-->
+<!--                </p>-->
+<!--                <p-->
+<!--                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"-->
+<!--                >-->
+<!--                  Palabras Únicas (usadas una vez):-->
+<!--                </p>-->
+<!--                <p-->
+<!--                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"-->
+<!--                >-->
+<!--                  Índice de Diversidad Léxica:-->
+<!--                </p>-->
                 <p
-                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"
+                  class="text-sm font-semibold text-gray-500 dark:text-gray-300"
                 >
-                  Cantidad de Palabras:
+                  Puntaje Anilist: {{ media_info.anilist_rating }}
                 </p>
-                <p
-                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"
-                >
-                  Palabras Únicas:
-                </p>
-                <p
-                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"
-                >
-                  Kanjis Únicos:
-                </p>
-                <p
-                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"
-                >
-                  Palabras Únicas (usadas una vez):
-                </p>
-                <p
-                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"
-                >
-                  Índice de Diversidad Léxica:
-                </p>
-                <p
-                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"
-                >
-                  Puntaje Anilist:
-                </p>
-                <p
-                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"
-                >
-                  Dificultad:
+<!--                <p-->
+<!--                  class="text-sm my-1 font-semibold text-gray-500 dark:text-gray-300"-->
+<!--                >-->
+<!--                  Dificultad:-->
+<!--                </p>-->
+
+                <p class="text-sm font-semibold text-gray-500 dark:text-gray-300">
+                  Géneros: {{ media_info.genres.join(', ') }}
                 </p>
               </div>
 
@@ -338,28 +342,30 @@ watch([page, currentView, searchQuery], () => {
                 </div>
 
                 <div class="ml-auto mt-4 md:mt-1 flex">
-                  <button
-                    type="button"
+                  <a
+                      :href="'https://anilist.co/anime/'+media_info.id_anilist"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     data-hs-overlay="#hs-vertically-centered-scrollable-batch1"
                     class="py-3.5 mr-3 duration-300 px-4 h-12 inline-flex justify-center items-center gap-2 border font-medium shadow-sm align-middle transition-all text-sm dark:hover:bg-white/10 text-gray-900 rounded-lg focus:border-red-500 dark:border-white dark:placeholder-gray-400 dark:text-white"
                   >
                     <div>Anilist</div>
-                  </button>
+                  </a>
 
-                  <button
-                    type="button"
-                    data-hs-overlay="#hs-vertically-centered-scrollable-batch1"
-                    class="py-3.5 duration-300 px-4 h-12 inline-flex justify-center items-center gap-2 border font-medium shadow-sm align-middle transition-all text-sm dark:hover:bg-blue-500/10 text-gray-900 rounded-lg focus:border-red-500 dark:border-blue-400 dark:placeholder-gray-400 dark:text-blue-400"
-                  >
-                    <div>Vocabulario</div>
-                    <UiBaseIcon
-                      :path="mdiArrowRight"
-                      w="w-5 md:w-5"
-                      h="h-5 md:h-5"
-                      size="20"
-                      class=""
-                    />
-                  </button>
+<!--                  <button-->
+<!--                    type="button"-->
+<!--                    data-hs-overlay="#hs-vertically-centered-scrollable-batch1"-->
+<!--                    class="py-3.5 duration-300 px-4 h-12 inline-flex justify-center items-center gap-2 border font-medium shadow-sm align-middle transition-all text-sm dark:hover:bg-blue-500/10 text-gray-900 rounded-lg focus:border-red-500 dark:border-blue-400 dark:placeholder-gray-400 dark:text-blue-400"-->
+<!--                  >-->
+<!--                    <div>Vocabulario</div>-->
+<!--                    <UiBaseIcon-->
+<!--                      :path="mdiArrowRight"-->
+<!--                      w="w-5 md:w-5"-->
+<!--                      h="h-5 md:h-5"-->
+<!--                      size="20"-->
+<!--                      class=""-->
+<!--                    />-->
+<!--                  </button>-->
                 </div>
               </div>
             </div>

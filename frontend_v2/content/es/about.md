@@ -153,7 +153,7 @@
 
 Este sitio hace uso de materiales y referencias que son propiedad intelectual de sus respectivos autores y poseedores de derechos. Consulte aquí para obtener el listado de contenido utilizado como sus respectivos autores.
 <br/><br/>
-El uso de estos materiales se realiza bajo la creencia de que cumple con las directrices de "uso justo" para fines educativos y sin ánimo de lucro. Si usted es el titular de los derechos de alguno de estos materiales y cree que no se cumple con las normas de uso justo, por favor, póngase en contacto con nosotros a brigadasosjapones@gmail.com
+El uso de estos materiales se realiza bajo la creencia de que cumple con las directrices de "uso justo" para fines educativos y sin ánimo de lucro. Si usted es el titular de los derechos de alguno de estos materiales y cree que no se cumple con las normas de uso justo, por favor, póngase en contacto con nosotros a info@manabe.es
 
 ## Contacto
 

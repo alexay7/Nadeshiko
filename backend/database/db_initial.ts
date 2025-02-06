@@ -272,6 +272,8 @@ export async function readSpecificDirectory(
     mediaDirPath = path.join(baseDir, 'anime', folder_name);
   }else if(type == 'jdrama'){
     mediaDirPath = path.join(baseDir, 'jdrama', folder_name);
+  }else{
+    return "Invalid type";
   }
 
   // Define la busqueda del contenido en la base de datos

@@ -27,7 +27,7 @@
 }
 
 #tab-headers ul li.active {
-  color: rgb(251, 120, 120);
+  color: #3fc38a;
 }
 
 #tab-headers ul li.active:after {
@@ -37,7 +37,7 @@
   left: 0;
   height: 2px;
   width: 100%;
-  background: #d74e67;
+  background: #3fc38a;
 }
 
 #active-tab,

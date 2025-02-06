@@ -29,8 +29,7 @@ info:
     url: https://scalar.com
     email: marc@scalar.com
 servers:
-  - url: https://api.brigadasos.xyz/api/v1
-  - url: https://api.dev.brigadasos.xyz/api/v1
+  - url: https://nadeapi.manabe.es/api/v1
     description: Responds with your request data
 security:
   - apiKeyHeader: []

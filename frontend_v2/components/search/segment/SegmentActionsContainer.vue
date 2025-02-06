@@ -56,9 +56,9 @@ const openAnkiModal = () => {
     </template>
     <template #content>
       <SearchDropdownContent>
-        <SearchDropdownItem
-          @click="downloadAudioOrImage(content.media_info.path_video, content.media_info.path_video.split('/').pop()!)"
-          :text="$t('searchpage.main.buttons.video')" :iconPath="mdiVideo" />
+<!--        <SearchDropdownItem-->
+<!--          @click="downloadAudioOrImage(content.media_info.path_video, content.media_info.path_video.split('/').pop()!)"-->
+<!--          :text="$t('searchpage.main.buttons.video')" :iconPath="mdiVideo" />-->
         <SearchDropdownItem
           @click="downloadAudioOrImage(content.media_info.path_image, content.media_info.path_image.split('/').pop()!)"
           :text="$t('searchpage.main.buttons.image')" :iconPath="mdiImage" />
@@ -78,8 +78,8 @@ const openAnkiModal = () => {
     </template>
     <template #content>
       <SearchDropdownContent>
-        <SearchDropdownItem @click="copyToClipboard(content.media_info.path_video)"
-          :text="$t('searchpage.main.buttons.video')" :iconPath="mdiVideo" />
+<!--        <SearchDropdownItem @click="copyToClipboard(content.media_info.path_video)"-->
+<!--          :text="$t('searchpage.main.buttons.video')" :iconPath="mdiVideo" />-->
         <SearchDropdownItem @click="copyToClipboard(content.media_info.path_image)"
           :text="$t('searchpage.main.buttons.image')" :iconPath="mdiImage" />
         <SearchDropdownItem @click="copyToClipboard(content.media_info.path_audio)"
@@ -89,9 +89,9 @@ const openAnkiModal = () => {
         </div>
         <SearchDropdownItem @click="copyToClipboard(content.segment_info.content_jp)"
           :text="$t('searchpage.main.buttons.jpsentence')" :iconPath="mdiText" />
-        <SearchDropdownItem @click="copyToClipboard(content.segment_info.content_en)"
+        <SearchDropdownItem v-if="content.segment_info.content_en" @click="copyToClipboard(content.segment_info.content_en)"
           :text="$t('searchpage.main.buttons.ensentence')" :iconPath="mdiText" />
-        <SearchDropdownItem @click="copyToClipboard(content.segment_info.content_es)"
+        <SearchDropdownItem v-if="content.segment_info.content_es" @click="copyToClipboard(content.segment_info.content_es)"
           :text="$t('searchpage.main.buttons.essentence')" :iconPath="mdiText" />
       </SearchDropdownContent>
     </template>

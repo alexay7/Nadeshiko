@@ -200,8 +200,9 @@ watch(ankiconnectAddress, (newValue) => {
                   <a class="underline text-blue-400" href="https://ankiweb.net/shared/info/2055492159">Ankiconnect</a>
                   instalado.
                 </li>
+
                 <li>
-                  Verifique que "https://nadeshiko.co" este en el webCorsOriginList de las configuraciones de
+                  Verifique que "https://nade.manabe.es" este en el webCorsOriginList de las configuraciones de
                   AnkiConnect.
                 </li>
                 <li>
@@ -289,8 +290,8 @@ watch(ankiconnectAddress, (newValue) => {
                           </template>
                           <template #content>
                             <SearchDropdownContent>
-                              <SearchDropdownItem @click="setKeyValueField(item.key, '{video}')"
-                                :text="$t('searchpage.main.buttons.video')" :iconPath="mdiVideo" />
+<!--                              <SearchDropdownItem @click="setKeyValueField(item.key, '{video}')"-->
+<!--                                :text="$t('searchpage.main.buttons.video')" :iconPath="mdiVideo" />-->
                               <SearchDropdownItem @click="setKeyValueField(item.key, '{image}')"
                                 :text="$t('searchpage.main.buttons.image')" :iconPath="mdiImage" />
                               <SearchDropdownItem @click="setKeyValueField(item.key, '{sentence-audio}')"
