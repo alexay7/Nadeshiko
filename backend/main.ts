@@ -16,7 +16,7 @@ const bodyParser = require('body-parser');
 newrelic.instrumentLoadedModule("express", express);
 
 const app: Application = express();
-app.set('trust proxy', 1); 
+app.set('trust proxy', 1);
 
 const allowedOrigins = process.env.ALLOWED_WEBSITE_URLS ? process.env.ALLOWED_WEBSITE_URLS.split(',') : [];
 
@@ -24,9 +24,6 @@ const allowedOrigins = process.env.ALLOWED_WEBSITE_URLS ? process.env.ALLOWED_WE
 app.use(function (req, res, next) {
   // Obtiene el origen de la solicitud
   const origin: string | undefined = req.headers.origin;
-
-  console.log(origin);
-  console.log(allowedOrigins);
 
   // Si el origen de la solicitud está en la lista de origines permitidos, establece el encabezado Access-Control-Allow-Origin
   if (allowedOrigins.includes(origin as string)) {
@@ -66,8 +63,6 @@ if (process.env.ENVIRONMENT === "production") {
     const width = req.query.width ? Number(req.query.width) : null;
     const height = req.query.height ? Number(req.query.height) : null;
     const imagePath = path.join(__dirname,"..", "/media", decodeURIComponent(req.path));
-
-	console.log(req.path);
 
     // If no resizing parameters are provided, serve the original image
     if (!width && !height) {
@@ -115,21 +110,23 @@ if (process.env.ENVIRONMENT === "production") {
     express.static(path.join(__dirname, "/media/tmp"), { fallthrough: false })
   );
 } else if (process.env.ENVIRONMENT === "production") {
-	const tmpDirectory = "";
-const mediaDirectory = "";
+  // Access media uploaded from outside (DigitalOcean)
+  const mediaDirectory: string = process.env.MEDIA_DIRECTORY!;
+  const tmpDirectory: string = process.env.TMP_DIRECTORY!;
+
   app.use("/api/media", (req, res, next) => {
     const width = req.query.width ? Number(req.query.width) : null;
     const height = req.query.height ? Number(req.query.height) : null;
-    const imagePath = path.join(mediaDirectory, decodeURIComponent(req.path));
+    const imagePath = path.join(mediaDirectory, req.path);
 
     if (!width && !height) {
-      return express.static(path.join(__dirname, "..", "/media"))(
-        req,
-        res,
-        next
+      return express.static(mediaDirectory, { fallthrough: false })(
+          req,
+          res,
+          next
       );
     }
-
+    
     const cacheDir = path.join(
       mediaDirectory,
       "media/tmp/cache",
