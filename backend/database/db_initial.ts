@@ -503,13 +503,6 @@ async function insertSegments(rows: any[], season: number, episode: number, medi
         logger.info( `Empty japanese content. Flagging row... %s`, row);
         status = SegmentStatus.INVALID_SENTENCE;
       }
-      else if (
-        row.CONTENT_TRANSLATION_ENGLISH === "" &&
-        row.CONTENT_TRANSLATION_SPANISH === ""
-      ) {
-        logger.info( `Empty translation group. Flagging row... %s`, row);
-        status = SegmentStatus.INVALID_SENTENCE;
-      }
       if (
         row.CONTENT.length >= 90
       ) {
