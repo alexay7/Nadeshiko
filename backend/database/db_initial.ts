@@ -102,7 +102,7 @@ export async function readAnimeDirectories(baseDir: string, type: string) {
   const animeDirectories = fs.readdirSync(globalPath);
 
   for (const animeItem of animeDirectories) {
-    
+
     const mediaDirPath = path.join(globalPath, animeItem);
     // Antes de crear el MEDIA, debe verificar la existencia de un archivo JSON con la info
     const dataJsonPath = path.join(mediaDirPath, "info.json");
@@ -154,7 +154,7 @@ export async function readAnimeDirectories(baseDir: string, type: string) {
         let numSeasons = 0;
         let numEpisodes = 0;
         for (const seasonDirname of seasonDirectories) {
-          
+
           if (!seasonDirname.startsWith('S')) {
             continue;
           }
@@ -349,6 +349,7 @@ async function fullSyncSpecificMedia(
     mediaFound = await Media.create(
       {
         id_anilist: media_raw.id_anilist ?? null,
+        anilist_rating: media_raw.anilist_rating ?? null,
         id_tmdb: media_raw.id_tmdb ?? null,
         romaji_name: media_raw.romaji_name,
         english_name: media_raw.english_name,
@@ -384,7 +385,7 @@ async function fullSyncSpecificMedia(
     if (!seasonDirname.startsWith('S')) {
       continue;
     }
-    
+
     const number_season = parseInt(seasonDirname.replace("S", ""));
     numSeasons += 1;
 

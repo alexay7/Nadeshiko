@@ -27,6 +27,11 @@ export class Media extends Model {
   })
   id_anilist!: number
 
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true
+  })
+  anilist_rating!: number
 
   @Column({
     type: DataType.INTEGER,
@@ -46,7 +51,7 @@ export class Media extends Model {
     allowNull: true
   })
   updated_at!: Date;
-  
+
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -64,7 +69,7 @@ export class Media extends Model {
     allowNull: true,
   })
   japanese_name!: string;
-  
+
   @Column({
     type: DataType.STRING,
     allowNull: true,

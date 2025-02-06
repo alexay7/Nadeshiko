@@ -828,6 +828,7 @@
         "columns": [
           "id",
           "id_anilist",
+          "anilist_rating",
           "id_tmdb",
           "created_at",
           "updated_at",
@@ -867,6 +868,9 @@
             },
             "id_anilist": {
               "type": "integer"
+            },
+            "anilist_rating": {
+              "type": "float"
             },
             "id_tmdb": {
               "type": "integer"
