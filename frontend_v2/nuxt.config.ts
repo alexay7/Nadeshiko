@@ -2,7 +2,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      baseURLBackend: process.env.NUXT_APP_BASE_URL_BACKEND,
+      baseURLBackend: "https://nadeapi.manabe.es/api/v1/",
       NUXT_APP_EXTENSION_KEY: process.env.NUXT_APP_EXTENSION_KEY,
     },
   },

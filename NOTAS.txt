@@ -1,0 +1,34 @@
+1. Debe haber 2 carpetas en media: anime y jdrama
+
+2. Dentro de cada carpeta deberá haber una subcarpeta por cada obra
+
+3. Dentro de la carpeta de cada obra deberá haber un archivo info.json con esta info
+
+{
+              id: media_raw.id,
+              romaji_name: media_raw.romaji_name,
+              english_name: media_raw.english_name,
+              japanese_name: media_raw.japanese_name,
+              folder_media_name: media_raw.folder_media_anime,
+              airing_format: media_raw.airing_format,
+              airing_status: media_raw.airing_status,
+              genres: media_raw.genres,
+              cover: media_raw.cover,
+              banner: media_raw.banner,
+              version: media_raw.version,
+              category: type == 'anime' ? CategoryType.ANIME : CategoryType.JDRAMA,
+              release_date: media_raw.release_date,
+              id_category: type == 'anime' ? 1 : 3,
+            }
+
+4. Además del archivo info.json, deberá haber una carpeta por cada temporada con formato SX
+
+5. Dentro de la carpeta de temporada deberá haber una carpeta para cada episodio, dentro de esta carpeta deberá haber un archivo llamado data.tsv con los siguientes campos
+
+ID START_TIME END_TIME NAME_AUDIO NAME_SCREENSHOT CONTENT CONTENT_TRANSLATION_SPANISH? CONTENT_TRANSLATION_ENGLISH? CONTENT_SPANISH_MT? CONTENT_ENGLISH_MT? ACTOR_JA? ACTOR_ES? ACTOR_EN?
+
+6. Las imágenes irán dentro de la carpeta del episodio
+
+7. Las carpetas con espacios con funcionan salvo que se ponga el decodeuri en main.ts
+
+8. Hay una función al meter series que borra los guiones de la mediaurl, evitar que se borren los guiones para que funcione

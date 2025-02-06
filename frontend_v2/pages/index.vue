@@ -35,7 +35,7 @@ onMounted(() => {
 const isSmallScreen = ref(false);
 
 const checkScreenSize = () => {
-  isSmallScreen.value = window.innerWidth >= 1280 && window.innerWidth <= 1535 || window.innerWidth < 1280;
+  isSmallScreen.value = window.innerWidth < 1280;
 };
 watch(() => window.innerWidth, checkScreenSize);
 </script>

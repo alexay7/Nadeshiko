@@ -197,7 +197,7 @@ export async function readAnimeDirectories(baseDir: string, type: string) {
                 // Para tener la libertad de reemplazar cada linea
                 for await (const line of rl) {
                   // Elimina las barras invertidas y divide la línea por el delimitador de TSV
-                  const rowArray = line.split("\t").map((s: string) => s.replace(/[\\\-]/g, ""));
+                  const rowArray = line.split("\t").map((s: string) => s.replace(/[\\]/g, ""));
                   if (!headers) {
                     headers = rowArray;
                   } else {
@@ -418,7 +418,7 @@ async function fullSyncSpecificMedia(
           // Para tener la libertad de reemplazar cada linea
           for await (const line of rl) {
             // Elimina las barras invertidas y divide la línea por el delimitador de TSV
-            const rowArray = line.split("\t").map((s: string) => s.replace(/[\\\-]/g, ""));
+            const rowArray = line.split("\t").map((s: string) => s.replace(/[\\]/g, ""));
             if (!headers) {
               headers = rowArray;
             } else {
@@ -491,12 +491,17 @@ async function insertSegments(rows: any[], season: number, episode: number, medi
     rows.map(async (row: any) => {
       let status = SegmentStatus.ACTIVE;
 
+	if(!row.CONTENT){
+        // ignore this row
+        return;
+      }
+
       if (row.CONTENT === "") {
         logger.info( `Empty japanese content. Flagging row... %s`, row);
         status = SegmentStatus.INVALID_SENTENCE;
       }
       else if (
-        row.CONTENT_TRANSLATION_ENGLISH === "" ||
+        row.CONTENT_TRANSLATION_ENGLISH === "" &&
         row.CONTENT_TRANSLATION_SPANISH === ""
       ) {
         logger.info( `Empty translation group. Flagging row... %s`, row);
@@ -511,8 +516,8 @@ async function insertSegments(rows: any[], season: number, episode: number, medi
 
       if (
           row.CONTENT.length >= 500 ||
-          row.CONTENT_TRANSLATION_ENGLISH.length >= 500 ||
-          row.CONTENT_TRANSLATION_SPANISH.length >= 500
+          (row.CONTENT_TRANSLATION_ENGLISH && row.CONTENT_TRANSLATION_ENGLISH.length >= 500) ||
+          (row.CONTENT_TRANSLATION_SPANISH && row.CONTENT_TRANSLATION_ENGLISH.length >= 500)
       ) {
         logger.info( `Content longer than 500 characters. Can not save row, skipping... %s`, row);
         return;

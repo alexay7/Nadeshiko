@@ -1,4 +1,3 @@
-version: "3"
 services:
   pgroonga:
     image: groonga/pgroonga:latest
@@ -62,7 +61,7 @@ services:
     image: redis
     command: redis-server --requirepass nadeshiko
     ports:
-      - 6379:6379
+      - 6380:6379
     networks:
       - nadedb-network
 

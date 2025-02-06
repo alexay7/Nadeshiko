@@ -25,6 +25,9 @@ app.use(function (req, res, next) {
   // Obtiene el origen de la solicitud
   const origin: string | undefined = req.headers.origin;
 
+  console.log(origin);
+  console.log(allowedOrigins);
+
   // Si el origen de la solicitud está en la lista de origines permitidos, establece el encabezado Access-Control-Allow-Origin
   if (allowedOrigins.includes(origin as string)) {
     res.setHeader("Access-Control-Allow-Origin", origin as string);
@@ -57,17 +60,19 @@ app.use(function (req, res, next) {
 const sharp = require("sharp");
 const fs = require("fs");
 
-if (process.env.ENVIRONMENT === "testing") {
+if (process.env.ENVIRONMENT === "production") {
   // Access media uploaded from outside localhost
   app.use("/api/media", (req, res, next) => {
     const width = req.query.width ? Number(req.query.width) : null;
     const height = req.query.height ? Number(req.query.height) : null;
-    const imagePath = path.join(__dirname, "/media", req.path);
+    const imagePath = path.join(__dirname,"..", "/media", decodeURIComponent(req.path));
+
+	console.log(req.path);
 
     // If no resizing parameters are provided, serve the original image
     if (!width && !height) {
-      return express.static(path.join(__dirname, "/media"))(
-        req,
+      return express.static(path.join(__dirname, "..", "/media"))(
+	req,
         res,
         next
       );
@@ -110,17 +115,15 @@ if (process.env.ENVIRONMENT === "testing") {
     express.static(path.join(__dirname, "/media/tmp"), { fallthrough: false })
   );
 } else if (process.env.ENVIRONMENT === "production") {
-  // Access media uploaded from outside (DigitalOcean)
-  const mediaDirectory: string = process.env.MEDIA_DIRECTORY!;
-  const tmpDirectory: string = process.env.TMP_DIRECTORY!;
-
+	const tmpDirectory = "";
+const mediaDirectory = "";
   app.use("/api/media", (req, res, next) => {
     const width = req.query.width ? Number(req.query.width) : null;
     const height = req.query.height ? Number(req.query.height) : null;
-    const imagePath = path.join(mediaDirectory, req.path);
+    const imagePath = path.join(mediaDirectory, decodeURIComponent(req.path));
 
     if (!width && !height) {
-      return express.static(mediaDirectory, { fallthrough: false })(
+      return express.static(path.join(__dirname, "..", "/media"))(
         req,
         res,
         next
