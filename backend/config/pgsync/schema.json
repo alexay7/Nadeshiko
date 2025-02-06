@@ -870,7 +870,7 @@
               "type": "integer"
             },
             "anilist_rating": {
-              "type": "float"
+              "type": "integer"
             },
             "id_tmdb": {
               "type": "integer"
