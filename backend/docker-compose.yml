@@ -1,0 +1,12 @@
+services:
+  nadedb-backend:
+    image: nadedb-backend
+    build:
+      context: .
+    container_name: nadedb-backend
+    ports:
+      - "3014:5000"
+    network_mode: host
+    volumes:
+      - /media/discoB/nadeshiko:/app/media
+    restart: always

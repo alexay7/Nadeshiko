@@ -64,6 +64,8 @@ if (process.env.ENVIRONMENT === "production") {
     const height = req.query.height ? Number(req.query.height) : null;
     const imagePath = path.join(__dirname,"..", "/media", decodeURIComponent(req.path));
 
+	console.log(__dirname);
+
     // If no resizing parameters are provided, serve the original image
     if (!width && !height) {
       return express.static(path.join(__dirname, "..", "/media"))(
