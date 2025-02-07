@@ -188,7 +188,7 @@ watch([page, currentView, searchQuery], () => {
           <p
             class="mt-2 text-sm font-medium text-gray-200 text-left line-clamp-2 px-2 w-full"
           >
-            {{ media_info?.english_name }}
+            {{ media_info?.japanese_name }}
           </p>
         </div>
       </div>

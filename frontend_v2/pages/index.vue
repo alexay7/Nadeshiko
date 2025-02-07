@@ -241,7 +241,7 @@ watch(() => window.innerWidth, checkScreenSize);
                             <div class="mt-2 text-center justify-center flex flex-col items-center">
                               <h3 class="text-sm text-center font-semibold line-clamp-2">
                                 {{
-                                  media_info.english_name }}</h3>
+                                  media_info.japanese_name }} ({{media_info.romaji_name}})</h3>
                             </div>
                             <div class="text-center mt-1 mb-5 justify-center flex flex-col items-center">
                               <h3 class="text-sm text-center font-medium line-clamp-2">

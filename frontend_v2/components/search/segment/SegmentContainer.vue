@@ -315,7 +315,7 @@ const modifySentences = (sentences: Sentence[]):(Sentence&{other_languages:strin
           <!-- Media details  -->
           <div class="flex-1 justify-left">
             <p class="text-sm xxl:text-base xxm:text-2xl text-white/50 tracking-wide font-semibold my-2">
-              {{ sentence.basic_info.name_anime_en }} &bull;
+              {{ sentence.basic_info.name_anime_jp }} &bull;
               <template v-if="sentence.basic_info.season === 0">{{ $t('searchpage.main.labels.movie')
                 }}</template>
               <template v-else>
