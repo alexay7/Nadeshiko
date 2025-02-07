@@ -177,26 +177,43 @@ const loadNextSentence = async (sentence: Sentence, direction: 'forward' | 'back
   }
 };
 
+// Modify the sentences and append the sentences in other languages if they exist
+const modifySentences = (sentences: Sentence[]):(Sentence&{other_languages:string[]})[] => {
+  return sentences.map((sentence) => {
+    const newSentence = { ...sentence } as Sentence & { other_languages: string[] };
+
+    newSentence.other_languages = [];
+
+    // Append the sentences in other languages if they exist
+    if (sentence.segment_info.content_en) {
+      newSentence.other_languages.push(sentence.segment_info.content_en);
+    }
+
+    if (sentence.segment_info.content_es) {
+      newSentence.other_languages.push(sentence.segment_info.content_es);
+    }
+
+    return newSentence;
+  });
+};
 
 </script>
 <template>
   <div v-if="searchData?.sentences?.length > 0 && searchData">
-
     <SearchModalContext :sentence="selectedSentence" />
-
     <SearchModalAnkiNotes :sentence="searchNoteSentence"
-      :onClick="(sentence: Sentence, id: number) => ankiStore().addSentenceToAnki(sentence, id)" />
+                          :onClick="(sentence: Sentence, id: number) => ankiStore().addSentenceToAnki(sentence, id)" />
 
-    <div v-for="(sentence, index) in searchData.sentences" :key="sentence.segment_info.position"
-      :id="sentence.segment_info.position"
-      class="hover:bg-neutral-800/20 items-stretch b-2 rounded-lg group transition-all  flex flex-col lg:flex-row py-2"
-      :class="{ 'bg-neutral-800 hover:bg-neutral-800': sentence.segment_info.position === props.currentSentenceIndex }">
+    <div v-for="(sentence, index) in modifySentences(searchData.sentences)" :key="sentence.segment_info.position"
+         :id="sentence.segment_info.position"
+         class="hover:bg-neutral-800/20 items-stretch b-2 rounded-lg group transition-all  flex flex-col lg:flex-row py-2"
+         :class="{ 'bg-neutral-800 hover:bg-neutral-800': sentence.segment_info.position === props.currentSentenceIndex }">
       <!-- Image -->
       <div class="h-auto shrink-0 w-auto lg:w-[25m]">
         <img loading="lazy" :src="sentence.media_info.path_image + '?width=960&height=540'"
-          @click="zoomImage(sentence.media_info.path_image)"
-          class="inset-0 h-56 w-full object-cover filter hover:brightness-75 cursor-pointer object-center"
-          :key="sentence.media_info.path_image" />
+             @click="zoomImage(sentence.media_info.path_image)"
+             class="inset-0 h-56 w-full object-cover filter hover:brightness-75 cursor-pointer object-center"
+             :key="sentence.media_info.path_image" />
       </div>
       <!-- End Image -->
 
@@ -207,13 +224,13 @@ const loadNextSentence = async (sentence: Sentence, direction: 'forward' | 'back
           <div class="flex items-center justify-between py-1">
             <!-- Audio button -->
             <button
-              @click="playAudio(sentence.media_info.blob_audio_url ? sentence.media_info.blob_audio_url : sentence.media_info.path_audio, sentence.segment_info.uuid)"
-              class="py-2 px-2 mr-0.5 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-100 text-gray-500 hover:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-white/10 dark:hover:bg-white/30 dark:text-neutral-400 dark:hover:text-neutral-300">
+                @click="playAudio(sentence.media_info.blob_audio_url ? sentence.media_info.blob_audio_url : sentence.media_info.path_audio, sentence.segment_info.uuid)"
+                class="py-2 px-2 mr-0.5 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-gray-100 text-gray-500 hover:bg-gray-200 disabled:opacity-50 disabled:pointer-events-none dark:bg-white/10 dark:hover:bg-white/30 dark:text-neutral-400 dark:hover:text-neutral-300">
               <UiBaseIcon v-if="!isAudioPlaying[sentence.segment_info.uuid]" w="w-10 md:w-5" h="h-10 md:h-5" size="24"
-                class="" :path="mdiVolumeHigh" />
+                          class="" :path="mdiVolumeHigh" />
               <span v-else="isAudioPlaying"
-                class="animate-spin inline-block w-5 h-5 border-[3px] border-current border-t-transparent text-white rounded-full"
-                role="status" aria-label="loading"></span>
+                    class="animate-spin inline-block w-5 h-5 border-[3px] border-current border-t-transparent text-white rounded-full"
+                    role="status" aria-label="loading"></span>
             </button>
 
             <!-- Japanese Sentence -->
@@ -227,22 +244,22 @@ const loadNextSentence = async (sentence: Sentence, direction: 'forward' | 'back
 
               <div class="hidden sm:flex ml-auto">
                 <UiButtonPrimaryAction class="ml-4 p-0.5 lg:hidden group-hover:flex transition duration-300"
-                  @click="loadNextSentence(sentence, 'backward')" v-if="!isConcatenated(sentence)">
+                                       @click="loadNextSentence(sentence, 'backward')" v-if="!isConcatenated(sentence)">
                   <UiBaseIcon :path="mdiChevronLeft" />
                 </UiButtonPrimaryAction>
 
                 <UiButtonPrimaryAction class="ml-2 p-0.5 lg:hidden group-hover:flex transition duration-300"
-                  @click="loadNextSentence(sentence, 'both')" v-if="!isConcatenated(sentence)">
+                                       @click="loadNextSentence(sentence, 'both')" v-if="!isConcatenated(sentence)">
                   <UiBaseIcon :path="mdiArrowExpandHorizontal" />
                 </UiButtonPrimaryAction>
 
                 <UiButtonPrimaryAction class="ml-2 p-0.5 lg:hidden group-hover:flex transition duration-300"
-                  @click="loadNextSentence(sentence, 'forward')" v-if="!isConcatenated(sentence)">
+                                       @click="loadNextSentence(sentence, 'forward')" v-if="!isConcatenated(sentence)">
                   <UiBaseIcon :path="mdiChevronRight" />
                 </UiButtonPrimaryAction>
 
                 <UiButtonPrimaryAction class="ml-4 p-0.5 lg:hidden group-hover:flex transition duration-300"
-                  @click="revertActiveConcatenation" v-if="isConcatenated(sentence)">
+                                       @click="revertActiveConcatenation" v-if="isConcatenated(sentence)">
                   <UiBaseIcon :path="mdiClose" />
                 </UiButtonPrimaryAction>
               </div>
@@ -252,13 +269,13 @@ const loadNextSentence = async (sentence: Sentence, direction: 'forward' | 'back
           <!-- Second Row -->
           <div class="items-start flex-1 pt-1 justify-center">
             <!-- Tag Translation -->
-            <span
-              class="inline-flex items-center gap-x-1 py-1 px-3 rounded-lg text-xs font-medium border border-neutral-700 bg-red-100 text-neutral-600 dark:bg-neutral-700/40 dark:text-neutral-400">{{
+            <span v-if="sentence.other_languages.length > 0"
+                class="inline-flex items-center gap-x-1 py-1 px-3 rounded-lg text-xs font-medium border border-neutral-700 bg-red-100 text-neutral-600 dark:bg-neutral-700/40 dark:text-neutral-400">{{
                 $t('searchpage.main.labels.translation') }}</span>
 
             <!-- Tag NSFW -->
             <span v-if="sentence.segment_info.is_nsfw"
-              class="bg-gray-100 mb-1 text-gray-800 text-xs xxl:text-base xxm:text-2xl font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-2 dark:bg-sred/30 dark:text-gray-400 border border-gray-700">
+                  class="bg-gray-100 mb-1 text-gray-800 text-xs xxl:text-base xxm:text-2xl font-medium inline-flex items-center px-2.5 py-0.5 rounded mr-2 dark:bg-sred/30 dark:text-gray-400 border border-gray-700">
               NSFW
             </span>
 
@@ -270,21 +287,17 @@ const loadNextSentence = async (sentence: Sentence, direction: 'forward' | 'back
           <div class="items-start pb-2 flex-1 justify-center">
             <!-- Spanish and English Sentences -->
             <ul class="ml-5 xxm:ml-8 list-disc text-gray-400">
-              <li class="my-2 text-sm xxl:text-base xxm:text-2xl" v-for="segment in orderedSegments"
-                :key="segment.content">
-                <span v-html="sentence.segment_info[segment.highlight]
-                  ? sentence.segment_info[segment.highlight]
-                  : sentence.segment_info[segment.content]
-                  "></span>
-                <div v-if="sentence.segment_info[segment.mt]" class="hs-tooltip inline-block">
-                  <UiBaseIcon display="inline-block" vertical-align="top" :path="mdiTranslate" fill="#DDDF" w="w-4"
-                    h="h-4" size="19" class="ml-2 hs-tooltip-toggle" />
-                  <span
-                    class="hs-tooltip-content hs-tooltip-shown:opacity-90 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-[#181818] shadow-sm rounded-md text-white"
-                    role="tooltip">
-                    {{ $t('searchpage.main.labels.mtTooltip') }}
-                  </span>
-                </div>
+              <li class="my-2 text-sm xxl:text-base xxm:text-2xl" v-for="language in sentence.other_languages" :key="language">
+                <span v-html="language"></span>
+<!--                <div v-if="sentence.segment_info.content_mt" class="hs-tooltip inline-block">-->
+<!--                  <UiBaseIcon display="inline-block" vertical-align="top" :path="mdiTranslate" fill="#DDDF" w="w-4"-->
+<!--                              h="h-4" size="19" class="ml-2 hs-tooltip-toggle" />-->
+<!--                  <span-->
+<!--                      class="hs-tooltip-content hs-tooltip-shown:opacity-90 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-[#181818] shadow-sm rounded-md text-white"-->
+<!--                      role="tooltip">-->
+<!--                    {{ $t('searchpage.main.labels.mtTooltip') }}-->
+<!--                  </span>-->
+<!--                </div>-->
               </li>
             </ul>
             <!-- End Spanish and English Sentences -->
@@ -294,7 +307,7 @@ const loadNextSentence = async (sentence: Sentence, direction: 'forward' | 'back
           <!-- Buttons  -->
           <div class="flex-1 pb-2">
             <SearchSegmentActionsContainer :content="sentence" @open-context-modal="openModal"
-              @open-anki-modal="openAnkiModal(sentence)" />
+                                           @open-anki-modal="openAnkiModal(sentence)" />
           </div>
           <!-- End Buttons  -->
 
@@ -318,15 +331,15 @@ const loadNextSentence = async (sentence: Sentence, direction: 'forward' | 'back
 
     <div v-if="isLoading" class="text-center">
       <div
-        class="animate-spin inline-block w-6 h-6 my-5 border-[3px] border-current border-t-transparent text-white rounded-full"
-        role="status" aria-label="loading">
+          class="animate-spin inline-block w-6 h-6 my-5 border-[3px] border-current border-t-transparent text-white rounded-full"
+          role="status" aria-label="loading">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
   </div>
   <div v-else-if="isLoading && !searchData?.sentences?.length || !searchData" class="w-full">
     <div v-for="i in 10" :key="i"
-      class="hover:bg-neutral-800/20 mb-11 animate-pulse items-stretch b-2 rounded-lg group transition-all flex flex-col lg:flex-row py-2">
+         class="hover:bg-neutral-800/20 mb-11 animate-pulse items-stretch b-2 rounded-lg group transition-all flex flex-col lg:flex-row py-2">
       <!-- Image placeholder  -->
       <div class="h-auto shrink-0 w-auto lg:w-[26em]">
         <div class="h-56 w-full bg-gray-300 dark:bg-neutral-700"></div>
@@ -365,7 +378,7 @@ const loadNextSentence = async (sentence: Sentence, direction: 'forward' | 'back
         <div class="w-full align-top items-center">
           <div class="flex flex-col items-center max-w-lg mx-auto text-center">
             <img class="mb-6"
-              src="https://animeforums.net/uploads/monthly_2022_03/haruhi-suzumiya-kyon-computer-haruhi-suzumiya.gif.be78c7de58e641e3701a97a85d01a059.gif" />
+                 src="https://animeforums.net/uploads/monthly_2022_03/haruhi-suzumiya-kyon-computer-haruhi-suzumiya.gif.be78c7de58e641e3701a97a85d01a059.gif" />
             <h2 class="font-bold text-red-400 text-3xl">404</h2>
             <h1 class="mt-2 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">No encontramos
               resultados</h1>

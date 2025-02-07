@@ -10,7 +10,7 @@ const toggleMobileMenu = () => {
 }
 
 </script>
-<template>    
+<template>
     <header
         class="relative flex flex-wrap sm:justify-start sm:flex-nowrap w-full bg-white text-xs py-3 lg:py-2 dark:bg-header-background">
         <nav class="max-w-[92%] w-full mx-auto sm:flex sm:items-center sm:justify-between">
@@ -18,7 +18,7 @@ const toggleMobileMenu = () => {
                 <div class="flex mr-7">
                     <NuxtLink to="/"
                         class="text-lg inline-flex items-center text-center align-middle font-semibold text-white">
-                        <img format="ico" src="/favicon.ico" class="h-8 mr-3 rounded-semi" alt="Nadeshiko Logo" />
+                        <img format="ico" src="/favicon.ico" class="h-8 mr-3 rounded-full p-1 bg-white" alt="Nadeshiko Logo" />
                         Nadeshiko
                     </NuxtLink>
                 </div>
