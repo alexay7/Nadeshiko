@@ -92,6 +92,7 @@
     "romajiName": "Name",
     "japaneseName": "Japanese",
     "seasons": "Seasons",
+    "volumes": "Volumes",
     "episodes": "Episodes",
     "genres": "Genres"
   },
@@ -143,6 +144,7 @@
         "contentList": "Content list",
         "noresults": "No results found...",
         "season": "Season",
+        "volume": "Volumen",
         "episode": "Episode",
         "translation": "Translation (EN/ES)",
         "movie": "Movie",

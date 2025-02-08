@@ -23,7 +23,7 @@ watch(() => props.categorySelected, (newCategory) => {
     } else {
         categorySelected.value = 0;
     }
-    
+
 }, { immediate: true });
 
 const filteredMedia = computed(() => {
@@ -39,7 +39,7 @@ const filteredMedia = computed(() => {
     if (categorySelected.value === 0) {
         filteredItems.unshift({
             anime_id: 0,
-            name_anime_en: t('searchpage.main.labels.all'),
+            name_anime_jp: t('searchpage.main.labels.all'),
             amount_sentences_found: filteredItems.reduce((a, b) => a + parseInt(b.amount_sentences_found || 0), 0)
         });
     }
@@ -67,13 +67,13 @@ const filteredMedia = computed(() => {
 const filterAnime = (anime_id, anime_name) => {
     console.log('Filtered Anime:', anime_id, anime_name);
     const query = { ...route.query };
-    
+
     if (anime_id === 0) {
         delete query.media;
     } else {
         query.media = anime_id;
     }
-    
+
     router.push({ query });
 };
 
@@ -103,9 +103,9 @@ const filterAnime = (anime_id, anime_name) => {
                     <button @click="filterAnime(item.anime_id, item.name_anime_en)"
                         :class="{ 'bg-sgrayhover': item.anime_id == categorySelected }"
                         class="flex truncate border duration-300 items-center justify-between w-full px-4 py-2 hover:bg-sgrayhover text-xs xxl:text-base xxm:text-2xl text-left dark:border-white/5">
-                        <span class="truncate max-w-[80%] overflow-hidden text-ellipsis">{{ item.name_anime_en }}</span>
+                        <span class="truncate max-w-[80%] overflow-hidden text-ellipsis">{{ item.name_anime_jp }}</span>
                         <span
-                            v-if="item.name_anime_en?.toLowerCase() !== t('searchpage.main.labels.noresults').toLowerCase()"
+                            v-if="item.name_anime_jp?.toLowerCase() !== t('searchpage.main.labels.noresults').toLowerCase()"
                             class="bg-neutral-700 text-white rounded-lg px-3 ml-3 py-1 text-xs">
                             {{ item.amount_sentences_found }}
                         </span>

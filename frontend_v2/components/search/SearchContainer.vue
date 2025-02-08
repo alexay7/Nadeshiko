@@ -313,6 +313,9 @@ onBeforeRouteUpdate(async (to, from) => {
                     <GeneralTabsItem v-if="searchData?.categoryStatistics?.find((item) => item.category === 1)"
                         category="1" categoryName="Anime" :count="getCategoryCount(1)" :isActive="category === 1"
                         @click="categoryFilter(1)" />
+                    <GeneralTabsItem v-if="searchData?.categoryStatistics?.find((item) => item.category === 2)"
+                        category="2" categoryName="Audiolibros" :count="getCategoryCount(2)" :isActive="category === 2"
+                        @click="categoryFilter(2)" />
                     <GeneralTabsItem v-if="searchData?.categoryStatistics?.find((item) => item.category === 3)"
                         category="3" categoryName="Liveaction" :count="getCategoryCount(3)" :isActive="category === 3"
                         @click="categoryFilter(3)" />

@@ -93,6 +93,7 @@
     "japaneseName": "Nombre en Japonés",
     "seasons": "Temporadas",
     "episodes": "Episodios",
+    "volumes": "Volúmenes",
     "genres": "Géneros"
   },
   "searchSettingsModal": {
@@ -144,6 +145,7 @@
         "noresults": "No hay resultados...",
         "season": "Temporada",
         "episode": "Episodio",
+        "volume": "Volumen",
         "translation": "Traducción (EN/ES)",
         "movie": "Película",
         "searchmain": "Busca aquí una palabra!",

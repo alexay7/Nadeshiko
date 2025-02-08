@@ -143,6 +143,11 @@ watch([page, currentView, searchQuery], () => {
                 @click="handleFilterChange('anime')"
                 :selected="filterType === 'anime'"
               />
+               <SearchDropdownItem
+                text="Audiolibro"
+                @click="handleFilterChange('book')"
+                :selected="filterType === 'book'"
+              />
               <SearchDropdownItem
                 text="Live Action"
                 @click="handleFilterChange('liveaction')"
@@ -312,8 +317,11 @@ watch([page, currentView, searchQuery], () => {
                 >
                   <div class="px-2 py-2 text-center">
                     <div class="flex items-center gap-x-2">
-                      <p class="text-xs uppercase tracking-wide text-white">
+                      <p v-if="media_info.category!==2" class="text-xs uppercase tracking-wide text-white">
                         Temporadas:
+                      </p>
+                      <p v-else class="text-xs uppercase tracking-wide text-white">
+                        Volúmenes:
                       </p>
                       <p
                         class="text-xs font-medium text-gray-800 dark:text-gray-200"
@@ -324,7 +332,7 @@ watch([page, currentView, searchQuery], () => {
                   </div>
                 </div>
 
-                <div
+                <div v-if="media_info.category!==2"
                   class="flex h-8 flex-row border shadow-sm rounded-xl dark:bg-modal-input dark:border-sgray2"
                 >
                   <div class="px-2 py-2 text-center">
@@ -343,7 +351,7 @@ watch([page, currentView, searchQuery], () => {
 
                 <div class="ml-auto mt-4 md:mt-1 flex">
                   <a
-                      :href="'https://anilist.co/anime/'+media_info.id_anilist"
+                      :href="'https://anilist.co/' + (media_info.category === 2 ? 'manga' : 'anime') + '/' + media_info.id_anilist"
                       target="_blank"
                       rel="noopener noreferrer"
                     data-hs-overlay="#hs-vertically-centered-scrollable-batch1"

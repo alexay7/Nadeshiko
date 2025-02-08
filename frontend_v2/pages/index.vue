@@ -216,8 +216,10 @@ watch(() => window.innerWidth, checkScreenSize);
                                         {{ media_info.japanese_name }}
                                       </p>
                                       <p>
-                                        <span class="font-bold pt-3 first:pt-0 dark:text-white">{{
+                                        <span v-if="media_info.type!==2" class="font-bold pt-3 first:pt-0 dark:text-white">{{
                                           $t('animeList.seasons') }}:</span>
+                                        <span v-else class="font-bold pt-3 first:pt-0 dark:text-white">{{
+                                          $t('animeList.volumes') }}:</span>
                                         {{ media_info.num_seasons }}
                                       </p>
                                       <p>
