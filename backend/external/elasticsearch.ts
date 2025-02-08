@@ -100,7 +100,7 @@ export const querySegments = async (request: QuerySegmentsRequest): Promise<Quer
                 }
             });
         }
-        
+
         if (request.episode) {
             filter.push({
                 terms: {
@@ -248,7 +248,7 @@ export const querySegments = async (request: QuerySegmentsRequest): Promise<Quer
             group_by_category: {
                 terms: {
                     field: "Media.category",
-                    size: 10000 
+                    size: 10000
                 },
                 aggs: {
                     group_by_media_id: {
@@ -316,6 +316,7 @@ export const querySegments = async (request: QuerySegmentsRequest): Promise<Quer
     });
 
     const mediaInfo = queryMediaInfo(0, 10000000);
+
 
     return buildSearchAnimeSentencesResponse(await esResponse, await mediaInfo, await esNoHitsNoFiltersResponse, request);
 }
@@ -420,7 +421,7 @@ const buildSearchAnimeSentencesResponse = (esResponse: SearchResponse, mediaInfo
         // @ts-ignore
         categoryStatistics = esNoHitsNoFiltersResponse.aggregations["group_by_category"].buckets.map(bucket => ({
             category: bucket["key"],
-            count: bucket["doc_count"] 
+            count: bucket["doc_count"]
         }));
     }
 
@@ -441,7 +442,7 @@ const buildSearchAnimeSentencesResponse = (esResponse: SearchResponse, mediaInfo
                         episodesAcc[episodeBucket["key"]] = episodeBucket["doc_count"];
                         return episodesAcc;
                     }, {});
-    
+
                     seasonsAcc[seasonBucket["key"]] = episodes;
                     return seasonsAcc;
                 }, {});
@@ -455,10 +456,10 @@ const buildSearchAnimeSentencesResponse = (esResponse: SearchResponse, mediaInfo
                     amount_sentences_found: mediaBucket["doc_count"],
                     season_with_episode_hits: seasonsWithResults
                 };
-            }).filter(notEmpty); 
+            }).filter(notEmpty);
         });
     }
-    
+
     let cursor: FieldValue[] | undefined = undefined;
     if(esResponse.hits.hits.length >= 1) {
         cursor = esResponse.hits.hits[esResponse.hits.hits.length - 1]["sort"];
@@ -470,7 +471,7 @@ const buildSearchAnimeSentencesResponse = (esResponse: SearchResponse, mediaInfo
             categoryStatistics: [],
             sentences,
             cursor
-        }  
+        }
     }else{
         return {
             statistics: statistics,
@@ -498,7 +499,7 @@ const buildSearchAnimeSentencesSegments = (esResponse: SearchResponse, mediaInfo
             logger.error("Media Info not found for anime with id %s", data["media_id"])
             return;
         }
-        let location_media = mediaInfo.category == 1 ? 'anime' : 'jdrama'
+        let location_media = mediaInfo.category == 1 ? 'anime' : mediaInfo.category == 3 ? 'jdrama' : 'book';
 
         return {
             basic_info: {

@@ -28,6 +28,7 @@ let uuid = ref(null);
 const categoryMapping = {
     'all': 0,
     'anime': 1,
+  'book':2,
     'liveaction': 3
 };
 
@@ -38,8 +39,8 @@ const dynamicTitle = computed(() => {
     const sentence = searchData.value.sentences[0];
     return `${sentence.basic_info.name_anime_en} | Nadeshiko`;
   }
-  return route.query.query 
-    ? `${route.query.query} - Búsqueda en Nadeshiko` 
+  return route.query.query
+    ? `${route.query.query} - Búsqueda en Nadeshiko`
     : 'Nadeshiko - Búsqueda';
 })
 
@@ -48,8 +49,8 @@ const dynamicDescription = computed(() => {
     const sentence = searchData.value.sentences[0];
     return `${sentence.segment_info.content_jp} De ${sentence.basic_info.name_anime_en}, ${sentence.basic_info.season === 0 ? 'Película' : `Temporada ${sentence.basic_info.season}, Episodio ${sentence.basic_info.episode}`}`;
   }
-  return route.query.query 
-    ? `Resultados de búsqueda para "${route.query.query}" en Nadeshiko` 
+  return route.query.query
+    ? `Resultados de búsqueda para "${route.query.query}" en Nadeshiko`
     : 'Busca frases de anime y live action en Nadeshiko';
 })
 
@@ -69,7 +70,7 @@ const updateMetadata = () => {
 
   if (uuid.value && searchData.value?.sentences?.length > 0) {
     const sentence = searchData.value.sentences[0];
-    
+
     metaData.meta.push(
       { property: 'og:image', content: sentence.media_info.path_image + '?width=1200&height=630' },
       { name: 'twitter:image', content: sentence.media_info.path_image + '?width=1200&height=630' }
@@ -77,12 +78,12 @@ const updateMetadata = () => {
 
     if (sentence.media_info.path_audio) {
       const mp4Url = sentence.media_info.path_video;
-      
+
       metaData.meta.push(
         { property: 'og:video', content: mp4Url },
         { property: 'og:video:type', content: 'video/mp4' },
-        { property: 'og:video:width', content: '1280' },  
-        { property: 'og:video:height', content: '720' }  
+        { property: 'og:video:width', content: '1280' },
+        { property: 'og:video:height', content: '720' }
       )
 
       metaData.meta.push(
@@ -161,7 +162,7 @@ const fetchSentences = async (fromButton = false) => {
             searchData.value = null;
         }
 
-        // Fetch data from API      
+        // Fetch data from API
         const response = await apiSearch.getSentenceV1(body);
         // await delay(5000)
 

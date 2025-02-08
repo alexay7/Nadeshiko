@@ -97,6 +97,8 @@ export async function readAnimeDirectories(baseDir: string, type: string) {
     globalPath = path.join(baseDir, 'anime');
   }else if(type == 'jdrama'){
     globalPath = path.join(baseDir, 'jdrama');
+  } else if(type == 'book') {
+    globalPath = path.join(baseDir, 'book');
   }
 
   const animeDirectories = fs.readdirSync(globalPath);
@@ -133,9 +135,9 @@ export async function readAnimeDirectories(baseDir: string, type: string) {
               cover: media_raw.cover,
               banner: media_raw.banner,
               version: media_raw.version,
-              category: type == 'anime' ? CategoryType.ANIME : CategoryType.JDRAMA,
+              category: type == 'anime' ? CategoryType.ANIME : type == 'jdrama' ? CategoryType.JDRAMA : CategoryType.BOOK,
               release_date: media_raw.release_date,
-              id_category: type == 'anime' ? 1 : 3,
+              id_category: type == 'anime' ? 1 : type == 'jdrama' ? 3 : 2
             }
         );
 
@@ -272,7 +274,10 @@ export async function readSpecificDirectory(
     mediaDirPath = path.join(baseDir, 'anime', folder_name);
   }else if(type == 'jdrama'){
     mediaDirPath = path.join(baseDir, 'jdrama', folder_name);
-  }else{
+  } else if(type == 'book') {
+    mediaDirPath = path.join(baseDir, 'book', folder_name);
+  }
+  else{
     return "Invalid type";
   }
 
@@ -364,7 +369,7 @@ async function fullSyncSpecificMedia(
         banner: media_raw.banner,
         version: media_raw.version,
         release_date: media_raw.release_date,
-        category: type == 'anime' ? CategoryType.ANIME : CategoryType.JDRAMA,
+        category: type == 'anime' ? CategoryType.ANIME : type == 'jdrama' ? CategoryType.JDRAMA : CategoryType.BOOK,
       }
     );
     await mediaFound.save();

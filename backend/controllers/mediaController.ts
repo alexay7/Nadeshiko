@@ -211,6 +211,7 @@ export const getAllMedia = async (
     const categoryMap: Record<string, CategoryType> = {
       anime: CategoryType.ANIME,
       liveaction: CategoryType.JDRAMA,
+        book: CategoryType.BOOK
     };
 
     const whereClause: any = {};
@@ -237,7 +238,7 @@ export const getAllMedia = async (
 
     const paginatedResults = rows.map(media => {
       const mediaData = media.toJSON();
-      const location_media = mediaData.category === CategoryType.ANIME ? 'anime' : 'jdrama';
+      const location_media = mediaData.category === CategoryType.ANIME ? 'anime' : mediaData.category === CategoryType.JDRAMA ? 'jdrama' : 'book';
       mediaData.cover = [getBaseUrlMedia(), location_media, mediaData.cover].join("/");
       mediaData.banner = [getBaseUrlMedia(), location_media, mediaData.banner].join("/");
       return mediaData;

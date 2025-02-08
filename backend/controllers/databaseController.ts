@@ -17,6 +17,7 @@ export const reSyncDatabase = async (
       await addBasicData(db);
       await readAnimeDirectories(mediaDirectory, 'jdrama');
       await readAnimeDirectories(mediaDirectory, 'anime');
+      await readAnimeDirectories(mediaDirectory, 'book');
     });
     res.status(StatusCodes.OK).json({ message: "Database re-synced" });
   } catch (error) {
