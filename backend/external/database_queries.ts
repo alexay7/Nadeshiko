@@ -3,7 +3,7 @@ import {
   MediaInfoData,
   QueryMediaInfoResponse,
 } from "../models/external/queryMediaInfoResponse";
-import { getBaseUrlMedia } from "../utils/utils";
+import {getBaseUrlMedia, getLocationByCatId} from "../utils/utils";
 
 let MEDIA_TABLE_CACHE: QueryMediaInfoResponse | undefined = undefined;
 
@@ -76,7 +76,7 @@ export const refreshMediaInfoCache = async (page: number, pageSize: number) => {
       return;
     }
 
-    let location_media = result.media_info.category == 1 ? 'anime' : result.media_info.category == 3 ? 'jdrama' : 'book';
+    let location_media = getLocationByCatId(result.media_info.category);
     result.media_info.cover = [getBaseUrlMedia(), location_media ,result.media_info.cover].join(
       "/"
     );

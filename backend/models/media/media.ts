@@ -5,7 +5,8 @@ import { Segment } from "./segment";
 export enum CategoryType {
   ANIME= 1,
   BOOK=2,
-  JDRAMA=3
+  JDRAMA=3,
+  GAME=4
 }
 
 @Table({
@@ -38,6 +39,12 @@ export class Media extends Model {
     allowNull: true
   })
   id_tmdb!: number
+
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: true
+  })
+  id_vndb!: number
 
   @Column({
     type: DataType.DATE,

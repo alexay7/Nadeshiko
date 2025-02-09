@@ -830,6 +830,7 @@
             "id_anilist",
             "anilist_rating",
             "id_tmdb",
+            "id_vndb",
             "created_at",
             "updated_at",
             "romaji_name",
@@ -875,6 +876,9 @@
               "id_tmdb": {
                 "type": "integer"
               },
+                "id_vndb": {
+                    "type": "integer"
+                },
               "created_at": {
                 "type": "date"
               },

@@ -18,7 +18,13 @@ import {queryMediaInfo} from "../external/database_queries";
 import {MediaInfoStats} from "../models/external/queryMediaInfoResponse";
 import {GetAllAnimesResponse} from "../models/controller/GetAllAnimesResponse";
 import {SearchAnimeSentencesRequest} from "../models/controller/SearchAnimeSentencesRequest";
-import {ControllerRequest, ControllerResponse, getBaseUrlMedia, getBaseUrlTmp} from "../utils/utils";
+import {
+  ControllerRequest,
+  ControllerResponse,
+  getBaseUrlMedia,
+  getBaseUrlTmp,
+  getLocationByCatId
+} from "../utils/utils";
 import {SearchAnimeSentencesResponse} from "../models/controller/SearchAnimeSentencesResponse";
 import {GetWordsMatchedRequest} from "../models/controller/GetWordsMatchedRequest";
 import {GetWordsMatchedResponse} from "../models/controller/GetWordsMatchedResponse";
@@ -211,7 +217,8 @@ export const getAllMedia = async (
     const categoryMap: Record<string, CategoryType> = {
       anime: CategoryType.ANIME,
       liveaction: CategoryType.JDRAMA,
-        book: CategoryType.BOOK
+        book: CategoryType.BOOK,
+        game: CategoryType.GAME
     };
 
     const whereClause: any = {};
@@ -238,7 +245,7 @@ export const getAllMedia = async (
 
     const paginatedResults = rows.map(media => {
       const mediaData = media.toJSON();
-      const location_media = mediaData.category === CategoryType.ANIME ? 'anime' : mediaData.category === CategoryType.JDRAMA ? 'jdrama' : 'book';
+      const location_media = getLocationByCatId(mediaData.category);
       mediaData.cover = [getBaseUrlMedia(), location_media, mediaData.cover].join("/");
       mediaData.banner = [getBaseUrlMedia(), location_media, mediaData.banner].join("/");
       return mediaData;

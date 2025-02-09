@@ -1,5 +1,5 @@
 import path from "path";
-import { Media, CategoryType } from "../models/media/media";
+import { Media } from "../models/media/media";
 import {Segment, SegmentStatus} from "../models/media/segment";
 import { ApiAuth } from "../models/api/apiAuth";
 import { User } from "../models/user/user";
@@ -8,7 +8,7 @@ import { ApiAuthPermission } from "../models/api/ApiAuthPermission";
 import { UserRole } from "../models/user/userRole";
 import {refreshMediaInfoCache} from "../external/database_queries";
 import {logger} from "../utils/log";
-import { hashApiKey, generateApiKeyHint } from "../utils/utils";
+import {hashApiKey, generateApiKeyHint, getCatIdByLocation} from "../utils/utils";
 
 const bcrypt = require("bcrypt");
 const readline = require("readline");
@@ -92,14 +92,7 @@ export async function addBasicData(db: any) {
 
 // Función que lee todos los directorios y los mapea en la base de datos
 export async function readAnimeDirectories(baseDir: string, type: string) {
-  let globalPath = ''
-  if(type == 'anime'){
-    globalPath = path.join(baseDir, 'anime');
-  }else if(type == 'jdrama'){
-    globalPath = path.join(baseDir, 'jdrama');
-  } else if(type == 'book') {
-    globalPath = path.join(baseDir, 'book');
-  }
+  let globalPath = path.join(baseDir, type);
 
   const animeDirectories = fs.readdirSync(globalPath);
 
@@ -135,9 +128,9 @@ export async function readAnimeDirectories(baseDir: string, type: string) {
               cover: media_raw.cover,
               banner: media_raw.banner,
               version: media_raw.version,
-              category: type == 'anime' ? CategoryType.ANIME : type == 'jdrama' ? CategoryType.JDRAMA : CategoryType.BOOK,
+              category: getCatIdByLocation(type),
               release_date: media_raw.release_date,
-              id_category: type == 'anime' ? 1 : type == 'jdrama' ? 3 : 2
+              id_category: getCatIdByLocation(type)
             }
         );
 
@@ -268,18 +261,7 @@ export async function readSpecificDirectory(
   type: string
 ) {
 
-  let mediaDirPath = ''
-
-  if(type == 'anime'){
-    mediaDirPath = path.join(baseDir, 'anime', folder_name);
-  }else if(type == 'jdrama'){
-    mediaDirPath = path.join(baseDir, 'jdrama', folder_name);
-  } else if(type == 'book') {
-    mediaDirPath = path.join(baseDir, 'book', folder_name);
-  }
-  else{
-    return "Invalid type";
-  }
+  let mediaDirPath = path.join(baseDir, type, folder_name);
 
   // Define la busqueda del contenido en la base de datos
   let mediaFound = null;
@@ -358,6 +340,7 @@ async function fullSyncSpecificMedia(
         id_anilist: media_raw.id_anilist ?? null,
         anilist_rating: media_raw.anilist_rating ?? null,
         id_tmdb: media_raw.id_tmdb ?? null,
+        id_vndb: media_raw.id_vndb ?? null,
         romaji_name: media_raw.romaji_name,
         english_name: media_raw.english_name,
         japanese_name: media_raw.japanese_name,
@@ -369,7 +352,7 @@ async function fullSyncSpecificMedia(
         banner: media_raw.banner,
         version: media_raw.version,
         release_date: media_raw.release_date,
-        category: type == 'anime' ? CategoryType.ANIME : type == 'jdrama' ? CategoryType.JDRAMA : CategoryType.BOOK,
+        category: getCatIdByLocation(type)
       }
     );
     await mediaFound.save();

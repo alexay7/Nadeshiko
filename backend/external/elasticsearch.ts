@@ -16,7 +16,7 @@ import {
     SearchAnimeSentencesStatistics
 } from "../models/external/querySegmentsResponse";
 import {queryMediaInfo} from "./database_queries";
-import {getBaseUrlMedia, notEmpty} from "../utils/utils";
+import {getBaseUrlMedia, getLocationByCatId, notEmpty} from "../utils/utils";
 import {QueryWordsMatchedResponse, WordMatch, WordMatchMediaInfo} from "../models/external/queryWordsMatchedResponse";
 import {logger} from "../utils/log";
 import {QuerySegmentsRequest} from "../models/external/querySegmentsRequest";
@@ -499,7 +499,7 @@ const buildSearchAnimeSentencesSegments = (esResponse: SearchResponse, mediaInfo
             logger.error("Media Info not found for anime with id %s", data["media_id"])
             return;
         }
-        let location_media = mediaInfo.category == 1 ? 'anime' : mediaInfo.category == 3 ? 'jdrama' : 'book';
+        let location_media = getLocationByCatId(mediaInfo.category);
 
         return {
             basic_info: {

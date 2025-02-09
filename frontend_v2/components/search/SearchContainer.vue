@@ -29,7 +29,8 @@ const categoryMapping = {
     'all': 0,
     'anime': 1,
   'book':2,
-    'liveaction': 3
+    'liveaction': 3,
+  'game':4
 };
 
 // SEO Meta

@@ -15,7 +15,8 @@ coverage
 *.local
 media/anime
 media/jdrama
-media/books
+media/book
+media/game
 media/hidden
 media/tmp
 .env
