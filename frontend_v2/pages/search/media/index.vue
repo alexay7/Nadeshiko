@@ -173,7 +173,7 @@ watch([page, currentView, searchQuery], () => {
       <div
         v-if="currentView === 'grid'"
         class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-3 md:gap-4 lg:gap-5 xl:gap-6"gfh
-      >hh
+      >
         <!-- Loading Placeholder for Grid -->
         <div v-if="loading" v-for="i in pageSize" :key="i" class="flex flex-col items-center animate-pulse">
           <div class="relative w-full overflow-hidden rounded-lg bg-[rgba(255,255,255,0.06)] aspect-[2/3]"></div>
