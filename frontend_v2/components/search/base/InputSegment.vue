@@ -10,13 +10,13 @@ const navigateSearchSentence = async () => {
     path: '/search/sentence',
     query: {
       query: query.value,
+      sort:"random"
     }
   })
 }
 
 const handleKeyDown = event => {
   if (event.shiftKey && event.key === 'S') {
-
     const inputElem = document.getElementById("sentence-search-input");
     const rect = inputElem.getBoundingClientRect();
 
