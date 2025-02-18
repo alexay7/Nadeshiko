@@ -4,11 +4,12 @@ import {
     mdiPlus
 } from '@mdi/js'
 
-const api_store = apiStore()
-let isLoading = ref(false)
-let isError = ref(false)
-let isSuccess = ref(false)
-let fieldOptions = []
+const api_store = apiStore();
+let isLoading = ref(false);
+let isError = ref(false);
+let isSuccess = ref(false);
+let fieldOptions = [];
+let newApiKey = ref(null);
 
 onMounted(async () => {
     isError.value = false
@@ -37,7 +38,29 @@ const quotaPercentage = computed(() => {
     return (quotaUsed / quotaLimit) * 100;
 });
 
-
+const createApiKey = async () => {
+    isLoading.value = true;
+    isError.value = false;
+    isSuccess.value = false;
+    newApiKey.value = null;
+    try {
+        const response = await api_store.createApiKeyGeneral('default');
+        if (response && response.key) {
+            newApiKey.value = response.key;
+            isSuccess.value = true;
+          isLoading.value = false;
+        } else {
+            isError.value = true;
+          isLoading.value = false;
+        }
+    } catch (error) {
+        isError.value = true;
+        isLoading.value = false;
+        console.error(error);
+    } finally {
+        isLoading.value = false;
+    }
+};
 </script>
 
 <template>
@@ -62,6 +85,9 @@ const quotaPercentage = computed(() => {
         <p class="mt-3 text-gray-300">Peticiones restantes: {{ fieldOptions.quota?.quotaUsed }} / {{
                             fieldOptions.quota?.quotaLimit == 'NO_LIMIT' ? 'Ilimitado' : fieldOptions.quota?.quotaLimit }}</p>
     </div>
+    <div v-if="newApiKey" class="bg-green-100 p-4 rounded-lg mt-4">
+        <p class="text-green-800">Nueva llave API creada: {{ newApiKey }} ¡Guárdala bien!</p>
+    </div>
 
     <!-- Card -->
     <div class="bg-card-background p-6 my-6 mx-auto rounded-lg shadow-md">
@@ -70,15 +96,15 @@ const quotaPercentage = computed(() => {
                 <h3 class="text-lg text-white/90 tracking-wide font-semibold">Gestión de llaves API</h3>
             </div>
             <div class="ml-auto">
-                <button data-hs-overlay="#hs-vertically-centered-scrollable-addapikey"
+                <div data-hs-overlay="#hs-vertically-centered-scrollable-addapikey"
                     class="bg-graypalid flex items-center text-center hover:bg-graypalid/60 text-white font-bold py-2 pl-4  pr-6 rounded">
                     <UiBaseIcon display="inline" :path="mdiPlus" fill="#DDDF" w="w-5" h="h-5" size="20"
                         class="text-center flex mr-2 " />
-                    <button class="align-middle mb-0.5 flex text-center items-center">
+                    <button class="align-middle mb-0.5 flex text-center items-center" @click="createApiKey">
                         Añadir llave API
                     </button>
 
-                </button>
+                </div>
             </div>
         </div>
 
