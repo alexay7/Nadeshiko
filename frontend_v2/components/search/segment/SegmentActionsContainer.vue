@@ -1,5 +1,19 @@
 <script setup lang="ts">
-import { mdiText, mdiImage, mdiVideo, mdiContentCopy, mdiShare, mdiPlusBoxOutline, mdiFileDocumentPlusOutline, mdiStarShootingOutline, mdiTrayArrowDown, mdiFileVideo, mdiDotsHorizontal, mdiVolumeHigh } from '@mdi/js'
+import {
+  mdiText,
+  mdiImage,
+  mdiVideo,
+  mdiContentCopy,
+  mdiShare,
+  mdiPlusBoxOutline,
+  mdiFileDocumentPlusOutline,
+  mdiStarShootingOutline,
+  mdiTrayArrowDown,
+  mdiFileVideo,
+  mdiDotsHorizontal,
+  mdiVolumeHigh,
+  mdiCog
+} from '@mdi/js'
 
 import type { Sentence } from "@/stores/search";
 
@@ -35,6 +49,15 @@ const openAnkiModal = () => {
     </template>
     <template #content>
       <SearchDropdownContent>
+<!--        Shortcut to configure Anki-->
+        <NuxtLink to="/settings/sync">
+        <SearchDropdownItem :text="`Configurar Anki`" :iconPath="mdiCog" >
+          :iconPath="mdiStarShootingOutline" >
+
+        </SearchDropdownItem>
+        </NuxtLink>
+        <div class="border-b border-white/10 my-1"  />
+
         <!-- Anki by last added -->
         <SearchDropdownItem :is-disabled="!isAnkiConfigured" text="Añadir ejemplo a la última tarjeta añadida en Anki"
           :iconPath="mdiStarShootingOutline" @click="ankiStore().addSentenceToAnki(content)" />
