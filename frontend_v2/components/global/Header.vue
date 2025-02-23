@@ -9,6 +9,9 @@ const toggleMobileMenu = () => {
     isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
+// get current location
+const currentLocation = useRoute().name
+
 </script>
 <template>
     <header
@@ -90,29 +93,33 @@ const toggleMobileMenu = () => {
                         </a>
                     </div>
                     <GeneralLanguageSelector />
-
+                      <NuxtLink v-if="currentLocation!=='settings-slug'" to="/settings/sync" class=" py-2.5 px-5 inline-flex items-center gap-x-2 text-xs sm:text-xs font-semibold rounded-lg  border hover:bg-black/5 hover:border-white/70 transition-all  text-gray-800   disabled:opacity-50 disabled:pointer-events-none  dark:text-white">
+                            {{ $t("navbar.buttons.settings") }} Anki
+                      </NuxtLink>
+                      <div class="flex" v-if="currentLocation==='settings-slug'">
                         <button v-if="!isAuth || isAuth == null"
                             data-hs-overlay="#hs-vertically-centered-scrollable-loginsignup-modal"
                             class=" py-2.5 px-5 inline-flex items-center gap-x-2 text-xs sm:text-xs font-semibold rounded-lg  border hover:bg-black/5 hover:border-white/70 transition-all  text-gray-800   disabled:opacity-50 disabled:pointer-events-none  dark:text-white">
                             Log in
                         </button>
-                        <SearchDropdownContainer v-else dropdownId="hs-dropdown-with-header">
-                            <template #default>
-                                <SearchDropdownMainButton
-                                    dropdownButtonClass="py-2.5 px-4 inline-flex items-center gap-x-2 text-xs sm:text-xs font-semibold rounded-lg  border hover:bg-black/5 hover:border-white/70 transition-all  text-gray-800   disabled:opacity-50 disabled:pointer-events-none  dark:text-white"
-                                    dropdownId="hs-dropdown-with-header">
-                                    {{ $t("navbar.buttons.profile") }}
-                                </SearchDropdownMainButton>
-                            </template>
-                            <template #content>
-                                <SearchDropdownContent>
-                                    <NuxtLink to="/settings">
-                                        <SearchDropdownItem :text="$t('navbar.buttons.settings')" />
-                                    </NuxtLink>
-                                    <SearchDropdownItem @click="store.logout()" :text="$t('navbar.buttons.logout')" />
-                                </SearchDropdownContent>
-                            </template>
-                        </SearchDropdownContainer>
+                      <SearchDropdownContainer v-else dropdownId="hs-dropdown-with-header">
+                        <template #default>
+                          <SearchDropdownMainButton
+                              dropdownButtonClass="py-2.5 px-4 inline-flex items-center gap-x-2 text-xs sm:text-xs font-semibold rounded-lg  border hover:bg-black/5 hover:border-white/70 transition-all  text-gray-800   disabled:opacity-50 disabled:pointer-events-none  dark:text-white"
+                              dropdownId="hs-dropdown-with-header">
+                            {{ $t("navbar.buttons.profile") }}
+                          </SearchDropdownMainButton>
+                        </template>
+                        <template #content>
+                          <SearchDropdownContent>
+                            <NuxtLink to="/settings">
+                              <SearchDropdownItem :text="$t('navbar.buttons.settings')" />
+                            </NuxtLink>
+                            <SearchDropdownItem @click="store.logout()" :text="$t('navbar.buttons.logout')" />
+                          </SearchDropdownContent>
+                        </template>
+                      </SearchDropdownContainer>
+                      </div>
                     </div>
                 </div>
             </div>

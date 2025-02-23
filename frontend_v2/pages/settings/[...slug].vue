@@ -6,11 +6,13 @@ import { mdiAccount, mdiEmail, mdiSync, mdiCodeTags } from '@mdi/js'
 const { t, locale } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const user_store = userStore()
 
-const tabs_general = [
+const tabs_general = user_store.isLoggedIn ? [
     { name: 'Cuenta', icon: mdiAccount, route: '/settings/account' },
-    { name: 'Sincronización', icon: mdiSync, route: '/settings/sync' },
-]
+    { name: 'Anki', icon: mdiSync, route: '/settings/sync' },
+] : [{ name: 'Anki', icon: mdiSync, route: '/settings/sync' }]
+
 const tabs_advanced = [
     { name: 'Desarrollador', icon: mdiCodeTags, route: '/settings/developer' },
 ]
@@ -33,16 +35,17 @@ const navigateToTab = (path) => {
 
 // Redirigir a /settings/account si estamos en /settings
 if (route.path === '/settings') {
-    router.push('/settings/account')
+    router.push('/settings/sync')
 }
 
-definePageMeta({
-    middleware: 'auth'
-})
+
+// definePageMeta({
+//     middleware: 'auth'
+// })
 </script>
 
 <template>
-    <NuxtLayout> 
+    <NuxtLayout>
     <div class="w-11/12 mx-auto my-2 text-white min-h-screen">
         <div class="flex flex-col md:flex-row">
             <!-- Vertical Tabs -->
@@ -58,6 +61,7 @@ definePageMeta({
                         {{ tab.name }}
                     </button>
 
+                  <div class="flex flex-col dark:bg-card-background rounded-lg my-2 space-y-2" v-if="user_store.isLoggedIn">
                     <h3 class="text-lg pt-2 text-white/90 tracking-wide font-semibold">Avanzado</h3>
                     <div class="border-b border-white/10" />
                     <button v-for="tab in tabs_advanced" :key="tab.name"
@@ -67,6 +71,7 @@ definePageMeta({
                         <UiBaseIcon :path="tab.icon" size="20" />
                         {{ tab.name }}
                     </button>
+                  </div>
                 </nav>
             </div>
 
@@ -83,7 +88,7 @@ definePageMeta({
             </div>
 
             <!-- Tab Content -->
-            
+
             <div class="flex-grow md:pl-6 overflow-y-auto my-2 md:mx-auto">
                 <SettingsModuleAccount v-if="activeTab === '#horizontal-scroll-tab-cuenta'" />
                 <SettingsModuleAnki v-if="activeTab === '#horizontal-scroll-tab-sincronización'" />

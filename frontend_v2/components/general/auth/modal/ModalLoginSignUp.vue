@@ -164,64 +164,64 @@ const redirectToDiscordAuth = async () => {
                       </p>
                     </div>
                     <div class="mt-5 flex flex-col">
-                      <ClientOnly>
-                        <GoogleLogin :callback="callbackGoogle">
-                          <UiButtonPrimaryAction
-                            class="py-3 w-full px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-sgray text-white hover:bg-sgray2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                          >
-                            <svg
-                              class="w-4 h-auto"
-                              width="46"
-                              height="47"
-                              viewBox="0 0 46 47"
-                              fill="none"
-                            >
-                              <path
-                                d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z"
-                                fill="#4285F4"
-                              />
-                              <path
-                                d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z"
-                                fill="#34A853"
-                              />
-                              <path
-                                d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z"
-                                fill="#FBBC05"
-                              />
-                              <path
-                                d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z"
-                                fill="#EB4335"
-                              />
-                            </svg>
-                            Iniciar con Google
-                          </UiButtonPrimaryAction>
-                        </GoogleLogin>
-                      </ClientOnly>
-                      <UiButtonPrimaryAction
-                        @click="redirectToDiscordAuth"
-                        class="py-3 w-full px-4 mt-2 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-sgray text-white hover:bg-sgray2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                      >
-                        <svg
-                          class="w-5 h-5"
-                          viewBox="0 0 280 280"
-                          version="1.1"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                        >
-                          <g>
-                            <path
-                              d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"
-                              fill="#5865F2"
-                            ></path>
-                          </g>
-                        </svg>
-                        Iniciar con Discord
-                      </UiButtonPrimaryAction>
-                      <div
-                        class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600"
-                      >
-                        O
-                      </div>
+<!--                      <ClientOnly>-->
+<!--                        <GoogleLogin :callback="callbackGoogle">-->
+<!--                          <UiButtonPrimaryAction-->
+<!--                            class="py-3 w-full px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-sgray text-white hover:bg-sgray2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"-->
+<!--                          >-->
+<!--                            <svg-->
+<!--                              class="w-4 h-auto"-->
+<!--                              width="46"-->
+<!--                              height="47"-->
+<!--                              viewBox="0 0 46 47"-->
+<!--                              fill="none"-->
+<!--                            >-->
+<!--                              <path-->
+<!--                                d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z"-->
+<!--                                fill="#4285F4"-->
+<!--                              />-->
+<!--                              <path-->
+<!--                                d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z"-->
+<!--                                fill="#34A853"-->
+<!--                              />-->
+<!--                              <path-->
+<!--                                d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z"-->
+<!--                                fill="#FBBC05"-->
+<!--                              />-->
+<!--                              <path-->
+<!--                                d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z"-->
+<!--                                fill="#EB4335"-->
+<!--                              />-->
+<!--                            </svg>-->
+<!--                            Iniciar con Google-->
+<!--                          </UiButtonPrimaryAction>-->
+<!--                        </GoogleLogin>-->
+<!--                      </ClientOnly>-->
+<!--                      <UiButtonPrimaryAction-->
+<!--                        @click="redirectToDiscordAuth"-->
+<!--                        class="py-3 w-full px-4 mt-2 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-sgray text-white hover:bg-sgray2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"-->
+<!--                      >-->
+<!--                        <svg-->
+<!--                          class="w-5 h-5"-->
+<!--                          viewBox="0 0 280 280"-->
+<!--                          version="1.1"-->
+<!--                          xmlns="http://www.w3.org/2000/svg"-->
+<!--                          xmlns:xlink="http://www.w3.org/1999/xlink"-->
+<!--                        >-->
+<!--                          <g>-->
+<!--                            <path-->
+<!--                              d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z"-->
+<!--                              fill="#5865F2"-->
+<!--                            ></path>-->
+<!--                          </g>-->
+<!--                        </svg>-->
+<!--                        Iniciar con Discord-->
+<!--                      </UiButtonPrimaryAction>-->
+<!--                      <div-->
+<!--                        class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600"-->
+<!--                      >-->
+<!--                        O-->
+<!--                      </div>-->
 
                       <!-- Form -->
                       <form>
@@ -312,12 +312,12 @@ const redirectToDiscordAuth = async () => {
                               <input id="remember-me" name="remember-me" type="checkbox"
                                 class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-sgray dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
                             </div>
-                            
+
                             <div class="ml-3">
                               <label for="remember-me" class="text-sm text-gray-600 dark:text-gray-400">Recuerda mi inicio de
                                 sesión</label>
                             </div>
-                          
+
                           </div>
                           -->
                           <!-- End Checkbox -->
@@ -371,7 +371,7 @@ const redirectToDiscordAuth = async () => {
                             <div class="grid gap-y-4">
                               <!-- Form Group -->
                               <div>
-                   
+
                                 <div class="relative">
                                   <input
                                     type="username"
@@ -407,7 +407,7 @@ const redirectToDiscordAuth = async () => {
                               </div>
 
                               <div>
-                             
+
                                 <div class="relative">
                                   <input
                                     type="email"
@@ -449,7 +449,7 @@ const redirectToDiscordAuth = async () => {
                                   <div
                                     class="flex justify-between items-center"
                                   >
-                                
+
                                   </div>
                                   <div class="relative">
                                     <input
